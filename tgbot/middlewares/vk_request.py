@@ -18,7 +18,7 @@ async def get_groups():
         for items in data['response']['items']:
             groups_dict = {}
             groups_dict['id'] = int(items['id']) * (-1)
-            groups_dict['name'] = items['name']
+            groups_dict['name'] = str(items['name']).replace('<', '_').replace('>', '_')
             groups_list.append(groups_dict)
         return groups_list
         # print(groups_list)
@@ -34,8 +34,8 @@ async def get_friends():
         for items in data['response']['items']:
             friends_dict = {}
             friends_dict['id'] = int(items['id'])
-            friends_dict['first_name'] = items['first_name']
-            friends_dict['last_name'] = items['last_name']
+            friends_dict['first_name'] = items['first_name'].replace('<', '_').replace('>', '_')
+            friends_dict['last_name'] = items['last_name'].replace('<', '_').replace('>', '_')
             friends_list.append(friends_dict)
         return friends_list
         # print(friends_list)
@@ -54,6 +54,9 @@ async def get_news():
             video_prev_urls = []
             docs_urls = []
             audio_urls = []
+            notes_urls = []
+            market = {}
+            pretty_cards = {}
             news_dict = {}
             news_dict['datetime'] = items['date']
             news_dict['source_id'] = items['source_id']
@@ -86,11 +89,49 @@ async def get_news():
                     docs_urls.append(docs_url)
                 except:
                     pass
+                try:
+                    notes_url = att['note']['view_url']
+                    notes_urls.append(notes_url)
+                except:
+                    pass
+                try:
+                    poll_quest = att['poll']['question']
+                except:
+                    poll_quest = ''
+                try:
+                    market['img'] = att['market']['thumb_photo']
+                    market['title'] = att['market']['title']
+                    market['desc'] = att['market']['description']
+                except:
+                    pass
+                try:
+                    market_album_title = att['market_album']['title']
+                except:
+                    market_album_title = ''
+                try:
+                    pretty_cards['title'] = att['pretty_cards']['title']
+                    pretty_cards['url'] = att['pretty_cards']['link_url']
+                except:
+                    pass
+                try:
+                    event_text = att['event']['text']
+                except:
+                    event_text = ''
+
+
+
+
 
             news_dict['img_urls'] = img_urls
             news_dict['video_prev_urls'] = video_prev_urls
             news_dict['audio_urls'] = audio_urls
             news_dict['docs_urls'] = docs_urls
+            news_dict['notes_urls'] = notes_urls
+            news_dict['poll_quest'] = poll_quest
+            news_dict['market'] = market
+            news_dict['market_album_title'] = market_album_title
+            news_dict['pretty_cards'] = pretty_cards
+            news_dict['event_text'] = event_text
             news_list.append(news_dict)
         return news_list
 
@@ -102,5 +143,4 @@ time_now = (time.time()) + 10800
 
 
 
-time_good = datetime.utcfromtimestamp(time_now).strftime("%d-%m-%Y %H:%M:%S")
-print(time_good)
+# print(len('Список групп, на которые вы подписаны ВКонтакте:'))

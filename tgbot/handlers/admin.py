@@ -32,13 +32,21 @@ async def show_groups(message: Message):
     groups_vk_list = await vk_request.get_groups()
     with open('groups.json', encoding='utf-8') as file:
         groups_file_list = json.load(file)
+    counter_vk = 0
+    counter_file = 0
     for item_vk in groups_vk_list:
         group_vk_name = item_vk['name']
         groups_vk_name_list.append(group_vk_name)
+        counter_vk += 1
+        if counter_vk % 80 == 0 or counter_vk == len(groups_vk_list):
+            await message.answer('\n'.join(groups_vk_name_list), reply_markup=reply.button_case_groups_edit)
+            groups_vk_name_list = []
+            print(counter_vk)
     for item_file in groups_file_list:
         group_file_name = item_file['name']
         groups_file_name_list.append(group_file_name)
-    await message.answer('\n'.join(groups_vk_name_list), reply_markup=reply.button_case_groups_edit)
+    # await message.answer('\n'.join(groups_vk_name_list), reply_markup=reply.button_case_groups_edit)
+    # await message.answer(len(groups_vk_name_list), reply_markup=reply.button_case_groups_edit)
     await message.answer('\n'.join(groups_file_name_list))
 
 
