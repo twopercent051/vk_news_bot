@@ -25,16 +25,17 @@ async def send_message_to_admin(dp: Dispatcher):
             news_source_id = news['source_id']
             news_text = news['text']
             news_datetime = int(news['datetime']) + 10800
-            news_img_urls = news['img_urls']
-            news_video_prev_urls = news['video_prev_urls']
-            news_audio_urls = news['audio_urls']
-            news_docs_urls = news['docs_urls']
-            news_note_urls = news['notes_urls']
-            news_poll_quest = news['poll_quest']
-            news_market = news['market']
-            news_market_album_title = news['market_album_title']
-            news_pretty_cards = news['pretty_cards']
-            news_event_text = news['event_text']
+            # news_img_urls = news['img_urls']
+            # news_video_prev_urls = news['video_prev_urls']
+            # news_audio_urls = news['audio_urls']
+            # news_docs_urls = news['docs_urls']
+            # news_note_urls = news['notes_urls']
+            # news_poll_quest = news['poll_quest']
+            # news_market = news['market']
+            # news_market_album_title = news['market_album_title']
+            # news_pretty_cards = news['pretty_cards']
+            # news_event_text = news['event_text']
+            news_post_url = news['post_url']
 
             moscow_time_news = datetime.utcfromtimestamp(news_datetime).strftime("%d-%m-%Y %H:%M:%S")
             if group_id == news_source_id:
@@ -46,26 +47,28 @@ async def send_message_to_admin(dp: Dispatcher):
                 ]
                 if len(news_text) != 0:
                     text.append(news_text)
-                if len(news_img_urls) != 0:
-                    text.append(f'Ссылки на фото: {news_img_urls}')
-                if len(news_video_prev_urls) != 0:
-                    text.append(f'Ссылки на превью видео: {news_video_prev_urls}')
-                if len(news_video_prev_urls) != 0:
-                    text.append(f'Ссылки на аудио: {news_audio_urls}')
-                if len(news_video_prev_urls) != 0:
-                    text.append(f'Ссылки на документы: {news_docs_urls}')
-                if len(news_note_urls) != 0:
-                    text.append(f'Ссылки на заметки: {news_note_urls}')
-                if len(news_poll_quest) != 0:
-                    text.append(f'Опросник с вопросом: {hbold(news_poll_quest)}')
-                if len(news_market) != 0:
-                    text.append(f'ТОВАР {news_market["title"]} с описанием {news_market["desc"]} и изображением {news_market["img"]}')
-                if len(news_market_album_title) != 0:
-                    text.append(f'ПОДБОРКА ТОВАРОВ {news_market_album_title}')
-                if len(news_pretty_cards) != 0:
-                    text.append(f'Карточки {news_pretty_cards["title"]}: {news_pretty_cards["url"]}')
-                if len(news_event_text) != 0:
-                    text.append(f'СОБЫТИЕ {hbold(news_event_text)}')
+                if news_post_url is not None:
+                    text.append(news_post_url)
+                # if len(news_img_urls) != 0:
+                #     text.append(f'Ссылки на фото: {news_img_urls}')
+                # if len(news_video_prev_urls) != 0:
+                #     text.append(f'Ссылки на превью видео: {news_video_prev_urls}')
+                # if len(news_video_prev_urls) != 0:
+                #     text.append(f'Ссылки на аудио: {news_audio_urls}')
+                # if len(news_video_prev_urls) != 0:
+                #     text.append(f'Ссылки на документы: {news_docs_urls}')
+                # if len(news_note_urls) != 0:
+                #     text.append(f'Ссылки на заметки: {news_note_urls}')
+                # if len(news_poll_quest) != 0:
+                #     text.append(f'Опросник с вопросом: {hbold(news_poll_quest)}')
+                # if len(news_market) != 0:
+                #     text.append(f'ТОВАР {news_market["title"]} с описанием {news_market["desc"]} и изображением {news_market["img"]}')
+                # if len(news_market_album_title) != 0:
+                #     text.append(f'ПОДБОРКА ТОВАРОВ {news_market_album_title}')
+                # if len(news_pretty_cards) != 0:
+                #     text.append(f'Карточки {news_pretty_cards["title"]}: {news_pretty_cards["url"]}')
+                # if len(news_event_text) != 0:
+                #     text.append(f'СОБЫТИЕ {hbold(news_event_text)}')
 
 
                 await dp.bot.send_message(config.tg_bot.admin_ids[0], '\n'.join(text))

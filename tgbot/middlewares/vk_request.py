@@ -65,73 +65,80 @@ async def get_news():
             except:
                 news_dict['text'] = ''
             try:
-                attachments = items['attachments']
+                post_id = items['post_id']
+                source_id = items['source_id']
+                post_url = f'https://vk.com/al_feed.php?w=wall{source_id}_{post_id}'
             except:
-                attachments = []
-            for att in attachments:
-                try:
-                    img_url = att['photo']['sizes'][-1]['url']
-                    img_urls.append(img_url)
-                except:
-                    pass
-                try:
-                    video_prev_url = att['video']['image'][-1]['url']
-                    video_prev_urls.append(video_prev_url)
-                except:
-                    pass
-                try:
-                    audio_url = att['audio']['url']
-                    audio_urls.append(audio_url)
-                except:
-                    pass
-                try:
-                    docs_url = att['doc']['url']
-                    docs_urls.append(docs_url)
-                except:
-                    pass
-                try:
-                    notes_url = att['note']['view_url']
-                    notes_urls.append(notes_url)
-                except:
-                    pass
-                try:
-                    poll_quest = att['poll']['question']
-                except:
-                    poll_quest = ''
-                try:
-                    market['img'] = att['market']['thumb_photo']
-                    market['title'] = att['market']['title']
-                    market['desc'] = att['market']['description']
-                except:
-                    pass
-                try:
-                    market_album_title = att['market_album']['title']
-                except:
-                    market_album_title = ''
-                try:
-                    pretty_cards['title'] = att['pretty_cards']['title']
-                    pretty_cards['url'] = att['pretty_cards']['link_url']
-                except:
-                    pass
-                try:
-                    event_text = att['event']['text']
-                except:
-                    event_text = ''
+                post_url = None
+            news_dict['post_url'] = post_url
+            # try:
+            #     attachments = items['attachments']
+            # except:
+            #     attachments = []
+            # for att in attachments:
+            #     try:
+            #         img_url = att['photo']['sizes'][-1]['url']
+            #         img_urls.append(img_url)
+            #     except:
+            #         pass
+            #     try:
+            #         video_prev_url = att['video']['image'][-1]['url']
+            #         video_prev_urls.append(video_prev_url)
+            #     except:
+            #         pass
+            #     try:
+            #         audio_url = att['audio']['url']
+            #         audio_urls.append(audio_url)
+            #     except:
+            #         pass
+            #     try:
+            #         docs_url = att['doc']['url']
+            #         docs_urls.append(docs_url)
+            #     except:
+            #         pass
+            #     try:
+            #         notes_url = att['note']['view_url']
+            #         notes_urls.append(notes_url)
+            #     except:
+            #         pass
+            #     try:
+            #         poll_quest = att['poll']['question']
+            #     except:
+            #         poll_quest = ''
+            #     try:
+            #         market['img'] = att['market']['thumb_photo']
+            #         market['title'] = att['market']['title']
+            #         market['desc'] = att['market']['description']
+            #     except:
+            #         pass
+            #     try:
+            #         market_album_title = att['market_album']['title']
+            #     except:
+            #         market_album_title = ''
+            #     try:
+            #         pretty_cards['title'] = att['pretty_cards']['title']
+            #         pretty_cards['url'] = att['pretty_cards']['link_url']
+            #     except:
+            #         pass
+            #     try:
+            #         event_text = att['event']['text']
+            #     except:
+            #         event_text = ''
 
 
 
 
 
-            news_dict['img_urls'] = img_urls
-            news_dict['video_prev_urls'] = video_prev_urls
-            news_dict['audio_urls'] = audio_urls
-            news_dict['docs_urls'] = docs_urls
-            news_dict['notes_urls'] = notes_urls
-            news_dict['poll_quest'] = poll_quest
-            news_dict['market'] = market
-            news_dict['market_album_title'] = market_album_title
-            news_dict['pretty_cards'] = pretty_cards
-            news_dict['event_text'] = event_text
+            # news_dict['img_urls'] = img_urls
+            # news_dict['video_prev_urls'] = video_prev_urls
+            # news_dict['audio_urls'] = audio_urls
+            # news_dict['docs_urls'] = docs_urls
+            # news_dict['notes_urls'] = notes_urls
+            # news_dict['poll_quest'] = poll_quest
+            # news_dict['market'] = market
+            # news_dict['market_album_title'] = market_album_title
+            # news_dict['pretty_cards'] = pretty_cards
+            # news_dict['event_text'] = event_text
             news_list.append(news_dict)
         return news_list
 
